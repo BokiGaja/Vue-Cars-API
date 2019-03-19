@@ -10,6 +10,9 @@
                 <p class="card-text">Model: {{ car.model }}</p>
                 <p class="card-text">Number of Doors: {{ car.numberOfDoors }}</p>
                 <p class="card-text">Year: {{ car.year }}</p>
+                <button class="btn btn-success">
+                    <router-link :to="{name: 'edit', params: { id: car.id }}" style="color: white">Edit</router-link>
+                </button>
             </div>
         </div>
     </div>

@@ -27,20 +27,20 @@
             <br>
             <div class="form-check form-check-inline" id="engine">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="diesel" v-model="newCar.engine">
-                    <label class="form-check-label" for="inlineCheckbox1">diesel</label>
+                    <input class="form-check-input" type="checkbox" id="diesel" value="diesel" v-model="newCar.engine">
+                    <label class="form-check-label" for="diesel">diesel</label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="petrol" v-model="newCar.engine">
-                    <label class="form-check-label" for="inlineCheckbox2">petrol</label>
+                    <input class="form-check-input" type="checkbox" id="petrol" value="petrol" v-model="newCar.engine">
+                    <label class="form-check-label" for="petrol">petrol</label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="electric" v-model="newCar.engine">
-                    <label class="form-check-label" for="inlineCheckbox3">electric</label>
+                    <input class="form-check-input" type="checkbox" id="electric" value="electric" v-model="newCar.engine">
+                    <label class="form-check-label" for="electric">electric</label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="hybrid" v-model="newCar.engine">
-                    <label class="form-check-label" for="inlineCheckbox4">hybrid</label>
+                    <input class="form-check-input" type="checkbox" id="hybrid" value="hybrid" v-model="newCar.engine">
+                    <label class="form-check-label" for="hybrid">hybrid</label>
                 </div>
             </div>
         </div>
@@ -66,18 +66,23 @@
                     isAutomatic: null,
                     engine: []
                 },
+                editing: false,
                 years: []
             }
         },
 
         methods: {
             addCar() {
-                carService.createCar(this.newCar);
-                this.$router.push('/carAdded');
+                if (!this.editing) {
+                    carService.createCar(this.newCar);
+                    this.$router.push('/carAdded');
+                } else {
+                    carService.edit(this.$route.params.id, this.newCar);
+                    this.$router.push('/carAdded');
+                }
             },
 
             resetForm() {
-
                 this.newCar = {...this.newCar,
                     brand: '',
                     model: '',
@@ -94,9 +99,18 @@
             }
         },
 
-        created() {
+        async created() {
             for (let i = 1990; i<=2018; i++) {
                 this.years.push(i);
+            }
+            try {
+                const { data } = await carService.get(this.$route.params.id);
+                if (data) {
+                    this.newCar = {...data, engine: [...data.engine.split(',')]};
+                    this.editing = true;
+                }
+            } catch (error) {
+                console.log(error);
             }
         }
     }

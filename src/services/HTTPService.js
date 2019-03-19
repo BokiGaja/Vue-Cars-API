@@ -5,12 +5,16 @@ const http = axios.create({
 });
 
 class HTTPService {
-    get() {
-        return http.get('cars')
+    get(url) {
+        return http.get(url)
     }
 
     post(url, body) {
         return http.post(url, body)
+    }
+
+    put(url, body) {
+        return http.put(url, body)
     }
 }
 
