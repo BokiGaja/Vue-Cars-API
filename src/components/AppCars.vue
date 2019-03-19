@@ -32,6 +32,7 @@
             deleteCar(id){
                 carService.delete(id);
                 location.reload();
+                prompt(`You deleted car with ID: ${id}`)
             }
         },
 
