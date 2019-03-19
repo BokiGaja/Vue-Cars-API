@@ -30,9 +30,11 @@
         },
         methods: {
             deleteCar(id){
-                carService.delete(id);
-                location.reload();
-                prompt(`You deleted car with ID: ${id}`)
+                let confirm = prompt(`You deleted car with ID: ${id}`)
+                if (confirm.toLowerCase() === 'yes') {
+                    carService.delete(id);
+                    location.reload();
+                }
             }
         },
 

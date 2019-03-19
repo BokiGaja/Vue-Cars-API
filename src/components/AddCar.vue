@@ -1,51 +1,44 @@
 <template>
     <div class="container">
-    <form @submit.prevent="addCar">
-        <div class="form-group">
-            <input type="text" class="form-control" id="brand" placeholder="Brand" v-model="newCar.brand" required minlength="2">
-            <input type="text" class="form-control" id="model" placeholder="Model" v-model="newCar.model" required minlength="2">
-            <label for="years">Year</label>
-            <select id="years" v-model="newCar.year" required>
-                <option v-for="(year, index) in years" :key="index">{{ year }}</option>
-            </select>
-            <input type="number" class="form-control" id="maxSpeed" placeholder="Max speed" v-model="newCar.maxSpeed" required>
-            <input type="number" class="form-control" id="numberOfDoors" placeholder="Number of doors" v-model="newCar.numberOfDoors" required>
-            <hr>
-            <label for="isAutomatic">Is Automatic</label>
-            <div class="form-check" id="isAutomatic">
-                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="true" v-model="newCar.isAutomatic">
-                <label class="form-check-label" for="exampleRadios1" style="margin-right: 35px">
-                    Yes
-                </label>
-                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="false" v-model="newCar.isAutomatic">
-                <label class="form-check-label" for="exampleRadios2">
-                    No
-                </label>
-            </div>
-            <hr>
-            <label for="engine">Engine</label>
-            <br>
-            <div class="form-check form-check-inline" id="engine">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="diesel" value="diesel" v-model="newCar.engine">
-                    <label class="form-check-label" for="diesel">diesel</label>
+        <form @submit.prevent="addCar">
+            <div class="form-group">
+                <input type="text" class="form-control" id="brand" placeholder="Brand" v-model="newCar.brand" required minlength="2">
+                <input type="text" class="form-control" id="model" placeholder="Model" v-model="newCar.model" required minlength="2">
+                <label for="years">Year</label>
+                <select id="years" v-model="newCar.year" required>
+                    <option v-for="(year, index) in years" :key="index">{{ year }}</option>
+                </select>
+                <input type="number" class="form-control" id="maxSpeed" placeholder="Max speed" v-model="newCar.maxSpeed" required>
+                <input type="number" class="form-control" id="numberOfDoors" placeholder="Number of doors" v-model="newCar.numberOfDoors" required>
+                <hr>
+                <label for="isAutomatic">Is Automatic</label>
+                <div class="form-check" id="isAutomatic">
+                    <input class="form-check-input" type="checkbox" name="exampleRadios" id="exampleRadios1" value="true" v-model="newCar.isAutomatic">
                 </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="petrol" value="petrol" v-model="newCar.engine">
-                    <label class="form-check-label" for="petrol">petrol</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="electric" value="electric" v-model="newCar.engine">
-                    <label class="form-check-label" for="electric">electric</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="hybrid" value="hybrid" v-model="newCar.engine">
-                    <label class="form-check-label" for="hybrid">hybrid</label>
+                <hr>
+                <label for="engine">Engine</label>
+                <br>
+                <div class="form-check form-check-inline" id="engine">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" id="diesel" value="diesel" v-model="newCar.engine">
+                        <label class="form-check-label" for="diesel">diesel</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" id="petrol" value="petrol" v-model="newCar.engine">
+                        <label class="form-check-label" for="petrol">petrol</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" id="electric" value="electric" v-model="newCar.engine">
+                        <label class="form-check-label" for="electric">electric</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" id="hybrid" value="hybrid" v-model="newCar.engine">
+                        <label class="form-check-label" for="hybrid">hybrid</label>
+                    </div>
                 </div>
             </div>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
         <button class="btn btn-danger" @click="resetForm">Reset form</button>
         <button class="btn btn-success" @click="previewCar">Preview</button>
     </div>
@@ -53,7 +46,6 @@
 
 <script>
     import { carService } from "../services/Cars";
-
     export default {
         data() {
             return {
@@ -64,7 +56,7 @@
                     maxSpeed: null,
                     numberOfDoors: null,
                     isAutomatic: null,
-                    engine: []
+                    engine: ''
                 },
                 editing: false,
                 years: []
@@ -106,7 +98,7 @@
             try {
                 const { data } = await carService.get(this.$route.params.id);
                 if (data) {
-                    this.newCar = {...data, engine: [...data.engine.split(',')]};
+                    this.newCar = {...data};
                     this.editing = true;
                 }
             } catch (error) {
