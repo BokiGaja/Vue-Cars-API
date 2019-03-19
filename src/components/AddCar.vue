@@ -46,7 +46,8 @@
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
-    <button class="btn btn-danger" @click="resetForm">Reset form</button>
+        <button class="btn btn-danger" @click="resetForm">Reset form</button>
+        <button class="btn btn-success" @click="previewCar">Preview</button>
     </div>
 </template>
 
@@ -86,6 +87,10 @@
                     isAutomatic: null,
                     engine: []
                 };
+            },
+
+            previewCar() {
+                alert(JSON.stringify(this.newCar));
             }
         },
 
