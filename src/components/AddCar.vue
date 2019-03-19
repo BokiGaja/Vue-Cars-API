@@ -2,8 +2,8 @@
     <div class="container">
     <form @submit.prevent="addCar">
         <div class="form-group">
-            <input type="text" class="form-control" id="brand" placeholder="Brand" v-model="newCar.brand" required>
-            <input type="text" class="form-control" id="model" placeholder="Model" v-model="newCar.model" required>
+            <input type="text" class="form-control" id="brand" placeholder="Brand" v-model="newCar.brand" required minlength="2">
+            <input type="text" class="form-control" id="model" placeholder="Model" v-model="newCar.model" required minlength="2">
             <label for="years">Year</label>
             <select id="years" v-model="newCar.year" required>
                 <option v-for="(year, index) in years" :key="index">{{ year }}</option>
