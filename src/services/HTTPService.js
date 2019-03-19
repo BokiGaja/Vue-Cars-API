@@ -16,6 +16,10 @@ class HTTPService {
     put(url, body) {
         return http.put(url, body)
     }
+
+    delete(url, id) {
+        return http.delete(url, id);
+    }
 }
 
 export const httpService = new HTTPService();

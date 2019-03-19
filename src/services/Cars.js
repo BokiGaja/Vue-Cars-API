@@ -16,6 +16,10 @@ class Cars {
     edit(id, car) {
         return httpService.put('cars/'+ id, car)
     }
+
+    delete(id) {
+        return httpService.delete('cars/'+id);
+    }
 }
 
 export const carService = new Cars();

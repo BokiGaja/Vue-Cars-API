@@ -13,6 +13,7 @@
                 <button class="btn btn-success">
                     <router-link :to="{name: 'edit', params: { id: car.id }}" style="color: white">Edit</router-link>
                 </button>
+                <button class="btn btn-danger" @click="deleteCar(car.id)">Delete</button>
             </div>
         </div>
     </div>
@@ -25,6 +26,12 @@
         data() {
             return {
                 cars: []
+            }
+        },
+        methods: {
+            deleteCar(id){
+                carService.delete(id);
+                location.reload();
             }
         },
 
