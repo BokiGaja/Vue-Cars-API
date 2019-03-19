@@ -1,4 +1,5 @@
 <template>
+    <div class="container">
     <form @submit.prevent="addCar">
         <div class="form-group">
             <input type="text" class="form-control" id="brand" placeholder="Brand" v-model="newCar.brand" required>
@@ -42,10 +43,11 @@
                     <label class="form-check-label" for="inlineCheckbox4">hybrid</label>
                 </div>
             </div>
-
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
+    <button class="btn btn-danger" @click="resetForm">Reset form</button>
+    </div>
 </template>
 
 <script>
@@ -71,7 +73,19 @@
             addCar() {
                 carService.createCar(this.newCar);
                 this.$router.push('/carAdded');
+            },
 
+            resetForm() {
+
+                this.newCar = {...this.newCar,
+                    brand: '',
+                    model: '',
+                    year: null,
+                    maxSpeed: null,
+                    numberOfDoors: null,
+                    isAutomatic: null,
+                    engine: []
+                };
             }
         },
 
